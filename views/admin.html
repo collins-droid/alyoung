@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    /* Basic styling for the admin dashboard */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .user-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .user-list li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <ul class="user-list" id="userList">
+      <!-- User data will be displayed here -->
+    </ul>
+  </div>
+
+  <script>
+    // Fetch user data and display it in the dashboard
+    async function fetchUserData() {
+      try {
+        const response = await fetch('/admin/users'); // Endpoint to fetch users data from your server
+        const users = await response.json();
+
+        // Get the userList element
+        const userList = document.getElementById('userList');
+
+        // Clear any existing content
+        userList.innerHTML = '';
+
+        // Loop through the users and display usernames
+        users.forEach(user => {
+          const listItem = document.createElement('li');
+          listItem.textContent = user.username; // Assuming 'username' is the field name
+          userList.appendChild(listItem);
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+
+    // Call fetchUserData when the page loads
+    window.onload = fetchUserData;
+  </script>
+</body>
+
+</html>
